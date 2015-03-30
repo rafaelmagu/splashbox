@@ -55,6 +55,35 @@ rake extract_colors
 rake consumers_save_photos
 ````
 
+V. Once you've deployed your app to Heroku ensure to run all the migrations using:
+
+````
+heroku run rake db:migrate -a yourappname
+````
+
+VI. To grant a waitlisted user access:
+
+````
+heroku run rails c -a yourappname
+
+# Find the user and set waitlist to false
+u=User.find id
+u.update_attributes! waitlist: false
+````
+
+VII. Don't wait to wait for the scheduled jobs to run?
+
+````
+# To pull down all the current unsplash.com photos
+heroku run rake scrape -a yourappname
+
+# To extract color palettes from the photos in your database
+heroku run rake extract_colors -a yourappname
+
+# To sync photos to user dropbox accounts
+heroku run rake consumers_save_photos -a yourappname
+````
+
 ## Features
 
 ### Gallery
