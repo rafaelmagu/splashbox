@@ -23,8 +23,9 @@ class Photo < ActiveRecord::Base
 
       content = agent.get_file(destination_url)
       upload_file(user, "#{ id }.jpg", content)
-    rescue Mechanize::ResponseCodeError
-      puts "Could download photo #{id} from #{url} (possibly a dead link)"
+    rescue
+      puts "Download failed for photo #{id} from #{url} (possibly a dead link)"
+      # Photo.find(id).destroy  # remove failed urls
     end
   end
 end
