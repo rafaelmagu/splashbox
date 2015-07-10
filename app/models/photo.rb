@@ -17,10 +17,14 @@ class Photo < ActiveRecord::Base
     agent = Mechanize.new
 
     # Deal with any redirects (e.g. bit.ly)
-    initial_url = agent.get(url)
-    destination_url = initial_url.uri.to_s
+    begin
+      initial_url = agent.get(url)
+      destination_url = initial_url.uri.to_s
 
-    content = agent.get_file(destination_url)
-    upload_file(user, "#{ id }.jpg", content)
+      content = agent.get_file(destination_url)
+      upload_file(user, "#{ id }.jpg", content)
+    rescue Mechanize::ResponseCodeError => e
+      puts e.to_json
+    end
   end
 end
