@@ -1,6 +1,6 @@
 module ApplicationHelper
   def dashboard_primary_button
-    link_to 'https://www.dropbox.com/home/Apps/Splashbox' do
+    link_to 'https://www.dropbox.com/home/Apps/Raf\'s%20Splashbox' do
       button_tag sanitize('View Photos &rarr;'), class: 'purple'
     end
   end
