@@ -23,8 +23,8 @@ class Photo < ActiveRecord::Base
 
       content = agent.get_file(destination_url)
       upload_file(user, "#{ id }.jpg", content)
-    rescue Mechanize::ResponseCodeError => e
-      puts e.to_json
+    rescue Mechanize::ResponseCodeError
+      puts "Could download photo #{id} from #{url} (possibly a dead link)"
     end
   end
 end
