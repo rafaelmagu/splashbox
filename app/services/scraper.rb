@@ -11,10 +11,10 @@ class Scraper
       html = open_post page
       break if html.nil?
       html.each do |post|
-        quick_url = post.search('img').first.attributes['src'].value
-        source_url = "https://unsplash.com" + post.search('.photo a').first.attributes['href'].value
-        author_name = post.search('.photo-description a').last.text
-        author_url = ("https://unsplash.com" + post.search('.photo-description a').last.attributes['href'].value) unless post.search('.photo-description a').last.attributes['href'].nil?
+        quick_url = post.search('.photo-container').first.attributes['src'].value
+        source_url = "https://unsplash.com/photos/#{post.attributes['data-photo-id'].value}/download"
+        author_name = post.search('.photo-description h2').last.text
+        author_url = ("https://unsplash.com" + post.search('.photo-description h2').last.children[0].attributes['href'].value) unless post.search('.photo-description h2').last.children[0].attributes['href'].nil?
 
         unless Photo.find_by_source_url(source_url)
           Photo.new_from_scraper source_url, quick_url, author_name, author_url
