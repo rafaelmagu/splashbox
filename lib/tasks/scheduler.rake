@@ -31,6 +31,7 @@ task extract_colors: :environment do
     if photo.colors.empty?
       if colors = Splashbox::Embedly.extract_colors(photo.quick_url)
         photo.update_attributes! colors: colors
+        photo.save!
         puts "Colors updated * #{ photo.id }.jpg"
       end
     end
